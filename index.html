@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DANIL: THE FINAL WASH 11/11</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --blue: #0071e3; --bg: #ffffff; --gray: #86868b; --cheese: #ffcc00; }
+        body { background: var(--bg); font-family: 'Manrope', sans-serif; margin: 0; overflow-x: hidden; color: #1d1d1f; }
+        
+        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: radial-gradient(circle, #f5f5f7 0%, #ffffff 100%); }
+        .hero h1 { font-size: 5rem; margin: 0; font-weight: 800; letter-spacing: -2px; }
+        
+        .container { max-width: 1100px; margin: 0 auto; padding: 100px 20px; }
+
+        .section { display: flex; align-items: center; justify-content: space-between; margin-bottom: 250px; gap: 80px; }
+        .section:nth-child(even) { flex-direction: row-reverse; }
+
+        .photo-box { flex: 1; position: relative; max-width: 500px; }
+        .photo-box img { width: 100%; border-radius: 40px; box-shadow: 0 30px 60px rgba(0,0,0,0.1); display: block; }
+        
+        .spin-effect { animation: slowSpin 20s linear infinite; border-radius: 50% !important; border: 12px solid #f5f5f7; }
+        @keyframes slowSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .text-box { flex: 1; }
+        .badge { display: inline-block; padding: 6px 16px; background: #f0f0f2; border-radius: 100px; font-weight: 700; font-size: 0.8rem; margin-bottom: 20px; text-transform: uppercase; color: var(--blue); }
+        .cheese-badge { background: var(--cheese); color: #000; }
+        .text-box h2 { font-size: 3rem; margin: 0 0 20px 0; font-weight: 800; }
+        .text-box p { font-size: 1.4rem; color: var(--gray); line-height: 1.5; font-style: italic; }
+
+        footer { background: #000; color: #fff; padding: 80px 20px; text-align: center; }
+        .creators { margin-top: 40px; border-top: 1px solid #333; padding-top: 40px; }
+        .creators p { font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: #86868b; margin-bottom: 20px; }
+        
+        .creator-links { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .creator-item { text-decoration: none; color: white; transition: 0.3s; }
+        .creator-item:hover { color: var(--blue); transform: translateY(-3px); }
+        .creator-name { font-weight: 800; font-size: 1.2rem; display: block; }
+        .creator-tg { font-size: 0.9rem; color: var(--blue); }
+
+        .btn { background: var(--blue); color: #fff; padding: 18px 35px; border-radius: 40px; text-decoration: none; font-weight: 800; display: inline-block; margin-top: 20px; transition: 0.3s; cursor: pointer; border: none; }
+        .btn:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+    <div class="hero" data-aos="fade-down">
+        <div class="badge">Exclusive Presentation</div>
+        <h1>DANIL. <br>11 ГРАНЕЙ.</h1>
+        <p>От чистоты барабана до любви к соусу</p>
+    </div>
+
+    <div class="container">
+        <div class="section" data-aos="fade-right"><div class="photo-box"><img src="danil1.jpg"></div><div class="text-box"><div class="badge">01</div><h2>База</h2><p>«Чистота начинается не с воды, а с настроя.»</p></div></div>
+        
+        <div class="section" data-aos="fade-left"><div class="photo-box"><img src="danil2.jpg"></div><div class="text-box"><div class="badge">02</div><h2>Подготовка</h2><p>«Школа учит многому, но техника отжима — это искусство.»</p></div></div>
+        
+        <div class="section" data-aos="zoom-in">
+            <div class="photo-box"><img src="danil3.jpg" class="spin-effect"></div>
+            <div class="text-box">
+                <div class="badge">03: КАЙФ</div>
+                <h2>Центрифуга</h2>
+                <p>«Зачем мне аттракционы, когда мой дом — это один большой барабан? Перекручиваюсь и кайфую!»</p>
+            </div>
+        </div>
+
+        <div class="section" data-aos="fade-right"><div class="photo-box"><img src="danil4.jpg"></div><div class="text-box"><div class="badge">04</div><h2>Live Stream</h2><p>«Мам, я на связи. Тут 1200 оборотов!»</p></div></div>
+        
+        <div class="section" data-aos="fade-left">
+            <div class="photo-box"><img src="danil5.jpg"></div>
+            <div class="text-box">
+                <div class="badge">05: FRESH</div>
+                <h2>Порошковый аппарат</h2>
+                <p>«Загрузка порошка прошла успешно. Теперь я — само воплощение свежести.»</p>
+            </div>
+        </div>
+
+        <div class="section" data-aos="fade-right">
+            <div class="photo-box"><img src="danil6.jpg"></div>
+            <div class="text-box">
+                <div class="badge">06: STYLE</div>
+                <h2>Авто-обертка</h2>
+                <p>«Упакован по высшему разряду. В такой обертке я готов к любым вызовам.»</p>
+            </div>
+        </div>
+
+        <div class="section" data-aos="fade-left"><div class="photo-box"><img src="danil7.jpg"></div><div class="text-box"><div class="badge">07</div><h2>Полоскание</h2><p>«Лишнее уходит, стиль остается.»</p></div></div>
+        <div class="section" data-aos="fade-right"><div class="photo-box"><img src="danil8.jpg"></div><div class="text-box"><div class="badge">08</div><h2>Финальный отжим</h2><p>«Сила давления делает нас крепче.»</p></div></div>
+        <div class="section" data-aos="fade-left"><div class="photo-box"><img src="danil9.jpg"></div><div class="text-box"><div class="badge">09</div><h2>Контроль</h2><p>«Взгляд чист, мысли свежи.»</p></div></div>
+        <div class="section" data-aos="zoom-out"><div class="photo-box"><img src="danil10.jpg"></div><div class="text-box"><div class="badge">10: IDEAL</div><h2>Готово</h2><p>«Данил версии 2.0 готов покорять этот мир.»</p></div></div>
+
+        <div class="section" data-aos="fade-up">
+            <div class="photo-box"><img src="danil11.jpg"></div>
+            <div class="text-box">
+                <div class="badge cheese-badge">11: SECRET LEVEL</div>
+                <h2>Сырная Эйфория</h2>
+                <p>«Можно отстирать всё, но мою любовь к сырному соусу не выведет ни один пятновыводитель. Это топливо моего стиля!»</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <h2 data-aos="fade-up">Презентация завершена</h2>
+        <button class="btn" onclick="window.scrollTo(0,0)">НАЧАТЬ НОВЫЙ ЦИКЛ</button>
+        
+        <div class="creators" data-aos="fade-up">
+            <p>Создатели проекта</p>
+            <div class="creator-links">
+                <a href="https://t.me/Wonderbrade" target="_blank" class="creator-item">
+                    <span class="creator-name">ПАРАШУКОВ</span>
+                    <span class="creator-tg">@Wonderbrade</span>
+                </a>
+                <a href="https://t.me/SETAGENLOX" target="_blank" class="creator-item">
+                    <span class="creator-name">ЛЯНСКИЙ</span>
+                    <span class="creator-tg">@SETAGENLOX</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1200, offset: 200, once: false });
+    </script>
+</body>
+</html>
