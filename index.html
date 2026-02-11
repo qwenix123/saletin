@@ -3,1356 +3,297 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧀 SOysdomofon - Симулятор Обмазывания Домофона 🚪</title>
+    <title>Данил: Стиральный Режим — Полная Версия</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg: #ffffff;
+            --text: #1d1d1f;
+            --blue: #0071e3;
+            --gray: #86868b;
         }
 
+        * { box-sizing: border-box; }
+
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
-            min-height: 100vh;
-            color: #fff;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Manrope', sans-serif;
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes cheeseFloat {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-200px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* === ЭКРАН АВТОРИЗАЦИИ === */
-        .auth-screen {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .auth-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
-            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5);
-            padding: 50px 40px;
-            max-width: 450px;
+        .container {
             width: 100%;
-            animation: slideIn 0.6s ease;
-        }
-
-        .auth-logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .auth-logo h1 {
-            font-size: 2.5em;
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-
-        .auth-logo p {
-            color: #7f8c8d;
-            font-size: 0.95em;
-        }
-
-        .auth-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .auth-tab {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            background: #ecf0f1;
-            color: #7f8c8d;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .auth-tab.active {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #2c3e50;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #ecf0f1;
-            border-radius: 15px;
-            font-size: 16px;
-            transition: all 0.3s;
-            background: #f8f9fa;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #f39c12;
-            background: white;
-        }
-
-        .auth-button {
-            width: 100%;
-            padding: 18px;
-            border: none;
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-            color: white;
-            border-radius: 15px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .auth-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.4);
-        }
-
-        .auth-button:active {
-            transform: translateY(-1px);
-        }
-
-        .error-message {
-            background: #e74c3c;
-            color: white;
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 14px;
-            animation: slideIn 0.3s ease;
-        }
-
-        .success-message {
-            background: #27ae60;
-            color: white;
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 14px;
-            animation: slideIn 0.3s ease;
-        }
-
-        /* === ИГРОВОЙ ЭКРАН === */
-        .game-screen {
-            display: none;
-            padding: 20px;
-            max-width: 1600px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px 30px;
-            margin-bottom: 20px;
+        /* Секции */
+        section {
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            justify-content: center;
+            padding: 80px 0;
+            border-bottom: 1px solid #f2f2f2;
         }
 
-        .header-left h1 {
-            font-size: 2em;
-            margin-bottom: 5px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .header-left p {
-            color: #ecf0f1;
-            font-size: 0.9em;
-        }
-
-        .logout-btn {
-            padding: 12px 25px;
-            background: #e74c3c;
-            border: none;
-            border-radius: 12px;
-            color: white;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .logout-btn:hover {
-            background: #c0392b;
-            transform: translateY(-2px);
-        }
-
-        .main-content {
+        /* Сетка адаптивная */
+        .grid {
             display: grid;
-            grid-template-columns: 300px 1fr 320px;
-            gap: 20px;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            width: 100%;
         }
 
-        @media (max-width: 1200px) {
-            .main-content {
+        @media (max-width: 768px) {
+            .grid {
                 grid-template-columns: 1fr;
+                text-align: center;
+                gap: 30px;
             }
+            .grid .img-wrapper, .grid .drum-container {
+                order: -1; 
+            }
+            h1 { font-size: 2.8rem !important; }
+            h2 { font-size: 2.2rem !important; }
+            section { min-height: auto; padding: 50px 0; }
         }
 
-        /* === СТАТИСТИКА === */
-        .stats-panel {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
+        /* Тексты */
+        h1 { font-size: clamp(3rem, 6vw, 4.5rem); font-weight: 800; margin: 0; letter-spacing: -2px; line-height: 1.1; }
+        h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; margin-bottom: 20px; }
+        h3 { font-size: 1.5rem; margin: 0 0 10px 0; color: var(--blue); }
+        p { font-size: 1.2rem; color: var(--gray); max-width: 550px; margin: 15px 0; }
+        @media (max-width: 768px) { p { margin: 15px auto; font-size: 1.1rem; } }
 
-        .stats-panel h2 {
-            margin-bottom: 20px;
-            font-size: 1.5em;
-        }
-
-        .stat-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            border-left: 4px solid #f39c12;
-        }
-
-        .stat-label {
-            color: #bdc3c7;
-            font-size: 0.85em;
-            margin-bottom: 5px;
-        }
-
-        .stat-value {
-            font-size: 1.5em;
-            font-weight: 700;
-            color: #f39c12;
-        }
-
-        .rebirth-section {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .rebirth-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
-            border: none;
-            border-radius: 15px;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
-        }
-
-        .rebirth-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(155, 89, 182, 0.4);
-        }
-
-        .rebirth-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* === ИГРОВАЯ ЗОНА === */
-        .game-area {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .cheese-counter {
-            font-size: 3em;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            animation: pulse 2s infinite;
-        }
-
-        .intercom-container {
-            position: relative;
-            display: inline-block;
-            margin: 30px 0;
-        }
-
-        .intercom {
-            width: 300px;
-            height: 400px;
-            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
+        /* Изображения */
+        .img-wrapper {
+            border-radius: 30px;
             overflow: hidden;
-        }
-
-        .intercom:hover {
-            transform: scale(1.05);
-        }
-
-        .intercom:active {
-            transform: scale(0.98);
-        }
-
-        .intercom-screen {
-            width: 80%;
-            height: 30%;
-            background: #1abc9c;
-            margin: 20px auto;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-            font-weight: 700;
-            color: #2c3e50;
-        }
-
-        .intercom-buttons {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            padding: 20px;
-        }
-
-        .intercom-btn {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            background: #f5f5f7;
             width: 100%;
-            aspect-ratio: 1;
-            background: #7f8c8d;
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Стиральный барабан */
+        .drum-container {
+            width: clamp(280px, 45vw, 450px);
+            height: clamp(280px, 45vw, 450px);
+            margin: 0 auto;
             border-radius: 50%;
-            border: 3px solid #95a5a6;
-            font-weight: 700;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border: 12px solid #efefef;
+            overflow: hidden;
+            position: relative;
+            animation: spin 15s linear infinite;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.1), 0 20px 40px rgba(0,0,0,0.1);
         }
 
-        .cheese-splash {
-            position: fixed;
-            pointer-events: none;
-            font-size: 2em;
-            animation: cheeseFloat 1.5s ease-out forwards;
-            z-index: 9999;
-            font-weight: bold;
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
-        .click-power {
-            color: #f39c12;
-            font-size: 1.1em;
-            margin-top: 10px;
+        /* Галерея */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
+            margin-top: 40px;
         }
 
-        /* === МАГАЗИН === */
-        .shop-panel {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .shop-panel h2 {
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 1.8em;
-        }
-
-        .shop-tabs {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 20px;
-        }
-
-        .shop-tab {
-            flex: 1;
-            padding: 10px 5px;
-            background: rgba(255, 255, 255, 0.05);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.3s;
-        }
-
-        .shop-tab.active {
-            background: #f39c12;
-        }
-
-        .shop-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            transition: all 0.3s;
-            border-left: 4px solid transparent;
-        }
-
-        .shop-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-left-color: #f39c12;
-            transform: translateX(5px);
-        }
-
-        .shop-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .shop-item-name {
-            font-weight: 700;
-            font-size: 1em;
-        }
-
-        .shop-item-level {
-            background: #f39c12;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #f5f5f7;
+            color: var(--blue);
+            border-radius: 100px;
             font-weight: 600;
-        }
-
-        .shop-item-desc {
-            color: #bdc3c7;
-            font-size: 0.85em;
-            margin-bottom: 10px;
-        }
-
-        .shop-item-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .shop-item-cost {
-            font-size: 1.1em;
-            font-weight: 700;
-            color: #f39c12;
-        }
-
-        .buy-btn {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-
-        .buy-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
-        }
-
-        .buy-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .select-btn {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-
-        .select-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
-        }
-
-        .select-btn.active {
-            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
-        }
-
-        /* === ЛИДЕРБОРД === */
-        .leaderboard {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            margin-top: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .leaderboard h2 {
-            text-align: center;
+            font-size: 0.9rem;
             margin-bottom: 20px;
-            font-size: 1.8em;
         }
 
-        .leaderboard-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 10px;
+        /* Блок авторов */
+        .authors-section {
+            background: #f5f5f7;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .authors-flex {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s;
-        }
-
-        .leaderboard-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(5px);
-        }
-
-        .leaderboard-rank {
-            width: 40px;
-            height: 40px;
-            background: #f39c12;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .author-card {
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
+            min-width: 250px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+        }
+
+        .author-card p {
+            margin: 0 auto;
             font-weight: 700;
-            font-size: 1.2em;
+            color: var(--text);
         }
 
-        .leaderboard-rank.gold {
-            background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%);
+        .author-tag {
+            color: var(--blue);
+            display: block;
+            margin-top: 5px;
+            font-weight: 400;
         }
 
-        .leaderboard-rank.silver {
-            background: linear-gradient(135deg, #bdc3c7 0%, #95a5a6 100%);
+        footer {
+            padding: 60px 20px;
+            text-align: center;
+            background: #000;
+            color: #fff;
         }
 
-        .leaderboard-rank.bronze {
-            background: linear-gradient(135deg, #d35400 0%, #e67e22 100%);
-        }
-
-        .leaderboard-player {
-            flex: 1;
-            margin-left: 15px;
-            font-weight: 600;
-        }
-
-        .leaderboard-score {
+        .btn {
+            display: inline-block;
+            background: var(--blue);
+            color: white;
+            padding: 18px 36px;
+            border-radius: 40px;
+            text-decoration: none;
             font-weight: 700;
-            color: #f39c12;
-            font-size: 1.2em;
-        }
-
-        /* === СКРОЛЛБАР === */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #f39c12;
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #e67e22;
-        }
-
-        .hidden {
-            display: none !important;
+            transition: 0.3s ease;
+            cursor: pointer;
+            border: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- ЭКРАН АВТОРИЗАЦИИ -->
-    <div id="authScreen" class="auth-screen">
-        <div class="auth-container">
-            <div class="auth-logo">
-                <h1>🧀 SOysdomofon</h1>
-                <p>Симулятор Обмазывания Домофона</p>
-            </div>
-
-            <div class="auth-tabs">
-                <button class="auth-tab active" id="loginTab">Вход</button>
-                <button class="auth-tab" id="registerTab">Регистрация</button>
-            </div>
-
-            <div id="errorMessage" class="error-message hidden"></div>
-            <div id="successMessage" class="success-message hidden"></div>
-
-            <form id="authForm">
-                <div class="form-group">
-                    <label>Логин</label>
-                    <input type="text" id="loginInput" placeholder="Введите логин" required>
+    <section>
+        <div class="container">
+            <div class="grid">
+                <div data-aos="fade-right">
+                    <span class="badge">Welcome to Saletin Danil site</span>
+                    <h1>Салетин Данил. <br><span style="color: var(--blue)">Начало цикла.</span></h1>
+                    <p>Добро пожаловать в официальную презентацию. Обычный парень — необычные режимы стирки.</p>
                 </div>
-
-                <div class="form-group">
-                    <label>Пароль</label>
-                    <input type="password" id="passwordInput" placeholder="Введите пароль" required>
+                <div class="img-wrapper" data-aos="zoom-in">
+                    <img src="danil1.jpg" alt="Данил">
                 </div>
-
-                <button type="submit" class="auth-button" id="authButton">ВОЙТИ</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- ИГРОВОЙ ЭКРАН -->
-    <div id="gameScreen" class="game-screen">
-        <div class="header">
-            <div class="header-left">
-                <h1>🧀 SOysdomofon</h1>
-                <p>Игрок: <span id="playerName"></span></p>
-            </div>
-            <button class="logout-btn" id="logoutBtn">Выход</button>
-        </div>
-
-        <div class="main-content">
-            <!-- ЛЕВАЯ ПАНЕЛЬ - СТАТИСТИКА -->
-            <div class="stats-panel">
-                <h2>📊 Статистика</h2>
-                
-                <div class="stat-item">
-                    <div class="stat-label">Сыра в секунду</div>
-                    <div class="stat-value" id="cheesePerSec">0</div>
-                </div>
-
-                <div class="stat-item">
-                    <div class="stat-label">Уровень</div>
-                    <div class="stat-value" id="levelDisplay">1</div>
-                </div>
-
-                <div class="stat-item">
-                    <div class="stat-label">Всего заработано</div>
-                    <div class="stat-value" id="totalCheese">0</div>
-                </div>
-
-                <div class="stat-item">
-                    <div class="stat-label">Обмазано домофонов</div>
-                    <div class="stat-value" id="intercomsSmeared">0</div>
-                </div>
-
-                <div class="rebirth-section">
-                    <div class="stat-item">
-                        <div class="stat-label">⭐ Перерождения</div>
-                        <div class="stat-value" id="rebirthCount">0</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Множитель</div>
-                        <div class="stat-value">x<span id="rebirthBonus">1</span></div>
-                    </div>
-                    <button class="rebirth-btn" id="rebirthBtn">
-                        ⭐ ПЕРЕРОДИТЬСЯ (<span id="rebirthCost">1,000,000</span> 🧀)
-                    </button>
-                </div>
-            </div>
-
-            <!-- ЦЕНТРАЛЬНАЯ ПАНЕЛЬ - ИГРОВАЯ ЗОНА -->
-            <div>
-                <div class="game-area">
-                    <div class="cheese-counter">
-                        🧀 <span id="cheeseCount">0</span>
-                    </div>
-
-                    <div class="intercom-container">
-                        <div class="intercom" id="intercom">
-                            <div class="intercom-screen">
-                                <span id="intercomName">CYFRAL</span>
-                            </div>
-                            <div class="intercom-buttons">
-                                <div class="intercom-btn">1</div>
-                                <div class="intercom-btn">2</div>
-                                <div class="intercom-btn">3</div>
-                                <div class="intercom-btn">4</div>
-                                <div class="intercom-btn">5</div>
-                                <div class="intercom-btn">6</div>
-                                <div class="intercom-btn">7</div>
-                                <div class="intercom-btn">8</div>
-                                <div class="intercom-btn">9</div>
-                                <div class="intercom-btn">*</div>
-                                <div class="intercom-btn">0</div>
-                                <div class="intercom-btn">#</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="click-power">
-                        ⚡ +<span id="clickPower">1</span> сыра за клик
-                    </div>
-                </div>
-
-                <div class="leaderboard">
-                    <h2>🏆 Топ Игроков</h2>
-                    <div id="leaderboardList">
-                        <div style="text-align: center; color: #bdc3c7; padding: 20px;">
-                            Загрузка лидеров...
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ПРАВАЯ ПАНЕЛЬ - МАГАЗИН -->
-            <div class="shop-panel">
-                <h2>🛒 Магазин</h2>
-
-                <div class="shop-tabs">
-                    <button class="shop-tab active" data-tab="upgrades">Улучшения</button>
-                    <button class="shop-tab" data-tab="intercoms">Домофоны</button>
-                    <button class="shop-tab" data-tab="sauce">Соусы</button>
-                </div>
-
-                <div id="upgradesTab" class="shop-content"></div>
-                <div id="intercomsTab" class="shop-content hidden"></div>
-                <div id="sauceTab" class="shop-content hidden"></div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getDatabase, ref, set, get, onValue, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+    <section style="background: #fafafa;">
+        <div class="container">
+            <div class="grid">
+                <div class="img-wrapper" data-aos="fade-up">
+                    <img src="danil2.jpg" alt="Школа">
+                </div>
+                <div data-aos="fade-left">
+                    <span class="badge">Mode: School Energy</span>
+                    <h2>Школьные <br>будни</h2>
+                    <p>Максимальная загрузка энергией в коридорах. Подготовка к финальному этапу парашайда.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        const firebaseConfig = {
-            databaseURL: "https://sirnik-3356a-default-rtdb.firebaseio.com/"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-
-        let currentUser = null;
-        let isAuthMode = true;
-        let gameData = {
-            cheese: 0,
-            totalCheese: 0,
-            allTimeCheese: 0,
-            level: 1,
-            rebirths: 0,
-            clickPower: 1,
-            cheesePerSecond: 0,
-            upgrades: {},
-            intercoms: ['cyfral'],
-            currentIntercom: 'cyfral',
-            sauces: ['basic'],
-            currentSauce: 'basic',
-            intercomBonus: 1,
-            sauceBonus: 0
-        };
-
-        // МАССИВНЫЕ УЛУЧШЕНИЯ
-        const upgradesList = [
-            { id: 'finger', name: '👆 Сильный палец', desc: '+1 сыра за клик', baseCost: 50, type: 'click', power: 1, scale: 1.5 },
-            { id: 'glove', name: '🧤 Резиновая перчатка', desc: '+3 сыра за клик', baseCost: 250, type: 'click', power: 3, scale: 1.5 },
-            { id: 'brush2', name: '🖌️ Кисточка', desc: '+8 сыра за клик', baseCost: 1000, type: 'click', power: 8, scale: 1.6 },
-            { id: 'roller', name: '🖌️ Валик', desc: '+20 сыра за клик', baseCost: 5000, type: 'click', power: 20, scale: 1.6 },
-            { id: 'sprayer', name: '💧 Пульверизатор', desc: '+50 сыра за клик', baseCost: 25000, type: 'click', power: 50, scale: 1.7 },
-            { id: 'bucket', name: '🪣 Ведро с сыром', desc: '+150 сыра за клик', baseCost: 100000, type: 'click', power: 150, scale: 1.7 },
-            { id: 'hose', name: '🚿 Шланг', desc: '+400 сыра за клик', baseCost: 500000, type: 'click', power: 400, scale: 1.8 },
-            { id: 'cannon', name: '💣 Сырная пушка', desc: '+1000 сыра за клик', baseCost: 2500000, type: 'click', power: 1000, scale: 1.8 },
-            
-            { id: 'auto', name: '🤖 Робот-губка', desc: '+1 сыра/сек', baseCost: 100, type: 'auto', power: 1, scale: 1.7 },
-            { id: 'sponge', name: '🧽 Умная губка', desc: '+5 сыра/сек', baseCost: 500, type: 'auto', power: 5, scale: 1.7 },
-            { id: 'drone', name: '🚁 Дрон-обмазыватель', desc: '+15 сыра/сек', baseCost: 2500, type: 'auto', power: 15, scale: 1.8 },
-            { id: 'brush', name: '🖌️ Авто-кисть', desc: '+50 сыра/сек', baseCost: 10000, type: 'auto', power: 50, scale: 1.8 },
-            { id: 'spray', name: '💦 Авто-распылитель', desc: '+150 сыра/сек', baseCost: 50000, type: 'auto', power: 150, scale: 1.9 },
-            { id: 'machine', name: '⚙️ Сырная машина', desc: '+500 сыра/сек', baseCost: 250000, type: 'auto', power: 500, scale: 1.9 },
-            { id: 'gun', name: '🔫 Мега-пушка', desc: '+1500 сыра/сек', baseCost: 1000000, type: 'auto', power: 1500, scale: 2.0 },
-            { id: 'conveyor', name: '🏗️ Конвейер', desc: '+5000 сыра/сек', baseCost: 5000000, type: 'auto', power: 5000, scale: 2.0 },
-            { id: 'factory', name: '🏭 Сырная фабрика', desc: '+15000 сыра/сек', baseCost: 25000000, type: 'auto', power: 15000, scale: 2.1 },
-            { id: 'megafactory', name: '🏢 Мега-фабрика', desc: '+50000 сыра/сек', baseCost: 100000000, type: 'auto', power: 50000, scale: 2.1 },
-            { id: 'corporation', name: '🌐 Корпорация', desc: '+150000 сыра/сек', baseCost: 500000000, type: 'auto', power: 150000, scale: 2.2 },
-            { id: 'empire', name: '👑 Сырная империя', desc: '+500000 сыра/сек', baseCost: 2500000000, type: 'auto', power: 500000, scale: 2.2 },
-        ];
-
-        const intercomsList = [
-            { id: 'cyfral', name: 'CYFRAL', bonus: 1.0, cost: 0, desc: 'Базовый домофон' },
-            { id: 'metakom', name: 'МЕТАКОМ', bonus: 1.15, cost: 25000, desc: '+15% к производству' },
-            { id: 'vizit', name: 'VIZIT', bonus: 1.35, cost: 100000, desc: '+35% к производству' },
-            { id: 'eltis', name: 'ELTIS', bonus: 1.60, cost: 500000, desc: '+60% к производству' },
-            { id: 'stalker', name: 'СТАЛКЕР', bonus: 2.0, cost: 2500000, desc: '+100% к производству' },
-            { id: 'factorial', name: 'ФАКТОРИАЛ', bonus: 2.5, cost: 10000000, desc: '+150% к производству' },
-            { id: 'smartlock', name: 'SMARTLOCK', bonus: 3.0, cost: 50000000, desc: '+200% к производству' },
-            { id: 'quantum', name: 'QUANTUM', bonus: 4.0, cost: 250000000, desc: '+300% к производству' },
-        ];
-
-        const saucesList = [
-            { id: 'basic', name: 'Обычный сыр', bonus: 0, cost: 0, desc: 'Базовый соус' },
-            { id: 'cheddar', name: 'Чеддер', bonus: 10, cost: 15000, desc: '+10 сыра за клик' },
-            { id: 'mozzarella', name: 'Моцарелла', bonus: 30, cost: 75000, desc: '+30 сыра за клик' },
-            { id: 'parmesan', name: 'Пармезан', bonus: 100, cost: 400000, desc: '+100 сыра за клик' },
-            { id: 'gorgonzola', name: 'Горгонзола', bonus: 300, cost: 2000000, desc: '+300 сыра за клик' },
-            { id: 'dorblue', name: 'Дор Блю', bonus: 1000, cost: 10000000, desc: '+1000 сыра за клик' },
-            { id: 'roquefort', name: 'Рокфор', bonus: 3000, cost: 50000000, desc: '+3000 сыра за клик' },
-            { id: 'brie', name: 'Бри', bonus: 10000, cost: 250000000, desc: '+10000 сыра за клик' },
-        ];
-
-        // Инициализация улучшений
-        upgradesList.forEach(u => {
-            if (gameData.upgrades[u.id] === undefined) {
-                gameData.upgrades[u.id] = 0;
-            }
-        });
-
-        const savedUser = localStorage.getItem('soysdomofon_user');
-        if (savedUser) {
-            currentUser = savedUser;
-            loadGameData();
-        }
-
-        document.getElementById('loginTab').addEventListener('click', function() {
-            isAuthMode = true;
-            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-            document.getElementById('authButton').textContent = 'ВОЙТИ';
-        });
-
-        document.getElementById('registerTab').addEventListener('click', function() {
-            isAuthMode = false;
-            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-            document.getElementById('authButton').textContent = 'ЗАРЕГИСТРИРОВАТЬСЯ';
-        });
-
-        document.getElementById('authForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const login = document.getElementById('loginInput').value.trim();
-            const password = document.getElementById('passwordInput').value;
-
-            if (!login || !password) {
-                showError('Заполните все поля');
-                return;
-            }
-
-            if (login.length < 3) {
-                showError('Логин должен содержать минимум 3 символа');
-                return;
-            }
-
-            if (password.length < 6) {
-                showError('Пароль должен содержать минимум 6 символов');
-                return;
-            }
-
-            const userRef = ref(database, 'users/' + login);
-
-            try {
-                const snapshot = await get(userRef);
-
-                if (isAuthMode) {
-                    if (!snapshot.exists()) {
-                        showError('Аккаунт не найден. Зарегистрируйтесь!');
-                        return;
-                    }
-
-                    const userData = snapshot.val();
-                    if (userData.password !== password) {
-                        showError('Неверный пароль');
-                        return;
-                    }
-
-                    currentUser = login;
-                    localStorage.setItem('soysdomofon_user', login);
-                    showSuccess('Вход выполнен!');
-                    setTimeout(() => loadGameData(), 500);
-
-                } else {
-                    if (snapshot.exists()) {
-                        showError('Этот логин уже занят!');
-                        return;
-                    }
-
-                    await set(userRef, {
-                        password: password,
-                        login: login,
-                        gameData: gameData,
-                        createdAt: Date.now()
-                    });
-
-                    currentUser = login;
-                    localStorage.setItem('soysdomofon_user', login);
-                    showSuccess('Регистрация успешна!');
-                    setTimeout(() => loadGameData(), 500);
-                }
-            } catch (error) {
-                console.error(error);
-                showError('Ошибка соединения с сервером');
-            }
-        });
-
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            const successDiv = document.getElementById('successMessage');
-            successDiv.classList.add('hidden');
-            errorDiv.textContent = message;
-            errorDiv.classList.remove('hidden');
-            setTimeout(() => errorDiv.classList.add('hidden'), 5000);
-        }
-
-        function showSuccess(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            const successDiv = document.getElementById('successMessage');
-            errorDiv.classList.add('hidden');
-            successDiv.textContent = message;
-            successDiv.classList.remove('hidden');
-            setTimeout(() => successDiv.classList.add('hidden'), 3000);
-        }
-
-        async function loadGameData() {
-            const userRef = ref(database, 'users/' + currentUser);
-            const snapshot = await get(userRef);
-
-            if (snapshot.exists()) {
-                const data = snapshot.val();
-                const loadedData = data.gameData || {};
-                
-                gameData = {
-                    ...gameData,
-                    ...loadedData,
-                    upgrades: loadedData.upgrades || {}
-                };
-                
-                // Инициализируем отсутствующие улучшения
-                upgradesList.forEach(u => {
-                    if (gameData.upgrades[u.id] === undefined) {
-                        gameData.upgrades[u.id] = 0;
-                    }
-                });
-                
-                document.getElementById('playerName').textContent = currentUser;
-            }
-
-            document.getElementById('authScreen').style.display = 'none';
-            document.getElementById('gameScreen').style.display = 'block';
-            
-            renderShop();
-            updateUI();
-            startGameLoop();
-            loadLeaderboard();
-            setupEventListeners();
-        }
-
-        document.getElementById('logoutBtn').addEventListener('click', async function() {
-            await saveGame();
-            localStorage.removeItem('soysdomofon_user');
-            location.reload();
-        });
-
-        async function saveGame() {
-            if (!currentUser) return;
-            
-            try {
-                const userRef = ref(database, 'users/' + currentUser + '/gameData');
-                await update(userRef, gameData);
-
-                const leaderboardRef = ref(database, 'leaderboard/' + currentUser);
-                await set(leaderboardRef, {
-                    login: currentUser,
-                    totalCheese: gameData.allTimeCheese,
-                    rebirths: gameData.rebirths,
-                    level: gameData.level
-                });
-            } catch (error) {
-                console.error('Ошибка сохранения:', error);
-            }
-        }
-
-        // Рендер магазина
-        function renderShop() {
-            // Улучшения
-            let upgradesHTML = '';
-            upgradesList.forEach(upgrade => {
-                const level = gameData.upgrades[upgrade.id] || 0;
-                const cost = Math.floor(upgrade.baseCost * Math.pow(upgrade.scale, level) * Math.pow(1.2, gameData.rebirths));
-                
-                upgradesHTML += `
-                    <div class="shop-item">
-                        <div class="shop-item-header">
-                            <div class="shop-item-name">${upgrade.name}</div>
-                            <div class="shop-item-level">Ур. ${level}</div>
-                        </div>
-                        <div class="shop-item-desc">${upgrade.desc}</div>
-                        <div class="shop-item-footer">
-                            <div class="shop-item-cost">${cost.toLocaleString()} 🧀</div>
-                            <button class="buy-btn" data-upgrade="${upgrade.id}">Купить</button>
-                        </div>
+    <section>
+        <div class="container">
+            <div class="grid">
+                <div data-aos="fade-right">
+                    <span class="badge">Spin Technology</span>
+                    <h2>Программа <br>прокручивание 60°</h2>
+                    <p>Тот самый момент. 1200 оборотов в секунду. Полное погружение в свежесть и прокручивоние.</p>
+                </div>
+                <div data-aos="zoom-in-up">
+                    <div class="drum-container">
+                        <img src="danil3.jpg" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
-                `;
-            });
-            document.getElementById('upgradesTab').innerHTML = upgradesHTML;
+                </div>
+            </div>
+        </div>
+    </section>
 
-            // Домофоны
-            let intercomsHTML = '';
-            intercomsList.forEach(intercom => {
-                const owned = gameData.intercoms.includes(intercom.id);
-                const active = gameData.currentIntercom === intercom.id;
-                
-                let buttonHTML = '';
-                if (intercom.id === 'cyfral') {
-                    buttonHTML = `<button class="select-btn ${active ? 'active' : ''}" data-select-intercom="${intercom.id}">Выбран</button>`;
-                } else if (owned) {
-                    buttonHTML = `<button class="select-btn ${active ? 'active' : ''}" data-select-intercom="${intercom.id}">${active ? 'Выбран' : 'Выбрать'}</button>`;
-                } else {
-                    buttonHTML = `<button class="buy-btn" data-buy-intercom="${intercom.id}" data-cost="${intercom.cost}">Купить</button>`;
-                }
-                
-                intercomsHTML += `
-                    <div class="shop-item">
-                        <div class="shop-item-header">
-                            <div class="shop-item-name">🚪 ${intercom.name}</div>
-                        </div>
-                        <div class="shop-item-desc">${intercom.desc}</div>
-                        <div class="shop-item-footer">
-                            <div class="shop-item-cost">${intercom.cost === 0 ? 'БЕСПЛАТНО' : intercom.cost.toLocaleString() + ' 🧀'}</div>
-                            ${buttonHTML}
-                        </div>
-                    </div>
-                `;
-            });
-            document.getElementById('intercomsTab').innerHTML = intercomsHTML;
+    <section style="background: #000; color: white;">
+        <div class="container">
+            <div class="grid">
+                <div class="img-wrapper" data-aos="flip-left" style="box-shadow: 0 10px 50px rgba(0,113,227,0.3);">
+                    <img src="danil4.jpg" alt="Звонок">
+                </div>
+                <div data-aos="fade-left">
+                    <span class="badge" style="background: #32d74b; color: white;">Live Stream</span>
+                    <h2 style="color: white;">Связь <br>из барабана</h2>
+                    <p style="color: #86868b;">Даже в центре центрифуги он остается на связи. Качество связи: Свежее.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            // Соусы
-            let saucesHTML = '';
-            saucesList.forEach(sauce => {
-                const owned = gameData.sauces.includes(sauce.id);
-                const active = gameData.currentSauce === sauce.id;
-                
-                let buttonHTML = '';
-                if (sauce.id === 'basic') {
-                    buttonHTML = `<button class="select-btn ${active ? 'active' : ''}" data-select-sauce="${sauce.id}">Выбран</button>`;
-                } else if (owned) {
-                    buttonHTML = `<button class="select-btn ${active ? 'active' : ''}" data-select-sauce="${sauce.id}">${active ? 'Выбран' : 'Выбрать'}</button>`;
-                } else {
-                    buttonHTML = `<button class="buy-btn" data-buy-sauce="${sauce.id}" data-cost="${sauce.cost}">Купить</button>`;
-                }
-                
-                saucesHTML += `
-                    <div class="shop-item">
-                        <div class="shop-item-header">
-                            <div class="shop-item-name">🧀 ${sauce.name}</div>
-                        </div>
-                        <div class="shop-item-desc">${sauce.desc}</div>
-                        <div class="shop-item-footer">
-                            <div class="shop-item-cost">${sauce.cost === 0 ? 'БЕСПЛАТНО' : sauce.cost.toLocaleString() + ' 🧀'}</div>
-                            ${buttonHTML}
-                        </div>
-                    </div>
-                `;
-            });
-            document.getElementById('sauceTab').innerHTML = saucesHTML;
-        }
+    <section>
+        <div class="container">
+            <h2 data-aos="fade-down" style="text-align: center;">Все режимы (Gallery)</h2>
+            <div class="gallery-grid">
+                <div class="img-wrapper" data-aos="fade-up"><img src="danil5.jpg"></div>
+                <div class="img-wrapper" data-aos="fade-up" data-aos-delay="100"><img src="danil6.jpg"></div>
+                <div class="img-wrapper" data-aos="fade-up" data-aos-delay="200"><img src="danil7.jpg"></div>
+                <div class="img-wrapper" data-aos="fade-up"><img src="danil8.jpg"></div>
+                <div class="img-wrapper" data-aos="fade-up" data-aos-delay="100"><img src="danil9.jpg"></div>
+                <div class="img-wrapper" data-aos="fade-up" data-aos-delay="200"><img src="danil10.jpg"></div>
+                <div class="img-wrapper" data-aos="fade-up"><img src="danil11.jpg"></div>
+            </div>
+        </div>
+    </section>
 
-        document.getElementById('intercom').addEventListener('click', function(event) {
-            const clickPower = gameData.clickPower + gameData.sauceBonus;
-            const bonusMultiplier = 1 + gameData.rebirths * 0.1;
-            const totalGain = Math.floor(clickPower * bonusMultiplier);
-            
-            gameData.cheese += totalGain;
-            gameData.totalCheese += totalGain;
-            gameData.allTimeCheese += totalGain;
+    <section class="authors-section">
+        <div class="container">
+            <h2 data-aos="fade-up">Над проектом работали</h2>
+            <div class="authors-flex">
+                <div class="author-card" data-aos="zoom-in">
+                    <h3>В ролях</h3>
+                    <p>летин <span class="author-tag">@Error12374</span></p>
+                </div>
+                <div class="author-card" data-aos="zoom-in" data-aos-delay="100">
+                    <h3>Авторы</h3>
+                    <p>парашуков <span class="author-tag">@Wonderbrade</span></p>
+                </div>
+                <div class="author-card" data-aos="zoom-in" data-aos-delay="200">
+                    <h3>Авторы</h3>
+                    <p>лянский <span class="author-tag">@SETAGENLOX</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            createCheeseSplash(event.clientX, event.clientY, totalGain);
+    <footer>
+        <div class="container">
+            <h2 style="color: #fff;">Цикл завершен.</h2>
+            <p style="color: #86868b;">2026 © Все права защищены Сетагеном,парашуковым.</p>
+            <br>
+            <button class="btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Начать заново</button>
+        </div>
+    </footer>
 
-            updateUI();
-            checkLevelUp();
-        });
-
-        function createCheeseSplash(x, y, amount) {
-            const splash = document.createElement('div');
-            splash.className = 'cheese-splash';
-            splash.textContent = `+${amount.toLocaleString()} 🧀`;
-            splash.style.left = x + 'px';
-            splash.style.top = y + 'px';
-            document.body.appendChild(splash);
-
-            setTimeout(() => splash.remove(), 1500);
-        }
-
-        function setupEventListeners() {
-            document.addEventListener('click', function(e) {
-                if (e.target.dataset.upgrade) {
-                    buyUpgrade(e.target.dataset.upgrade);
-                } else if (e.target.dataset.buyIntercom) {
-                    buyIntercom(e.target.dataset.buyIntercom, parseInt(e.target.dataset.cost));
-                } else if (e.target.dataset.selectIntercom) {
-                    selectIntercom(e.target.dataset.selectIntercom);
-                } else if (e.target.dataset.buySauce) {
-                    buySauce(e.target.dataset.buySauce, parseInt(e.target.dataset.cost));
-                } else if (e.target.dataset.selectSauce) {
-                    selectSauce(e.target.dataset.selectSauce);
-                }
-            });
-
-            document.querySelectorAll('.shop-tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    switchShopTab(this.dataset.tab);
-                });
-            });
-
-            document.getElementById('rebirthBtn').addEventListener('click', doRebirth);
-        }
-
-        function buyUpgrade(id) {
-            const upgrade = upgradesList.find(u => u.id === id);
-            if (!upgrade) return;
-
-            const level = gameData.upgrades[id] || 0;
-            const cost = Math.floor(upgrade.baseCost * Math.pow(upgrade.scale, level) * Math.pow(1.2, gameData.rebirths));
-
-            if (gameData.cheese >= cost) {
-                gameData.cheese -= cost;
-                gameData.upgrades[id]++;
-
-                if (upgrade.type === 'click') {
-                    gameData.clickPower += upgrade.power;
-                } else if (upgrade.type === 'auto') {
-                    gameData.cheesePerSecond += upgrade.power;
-                }
-
-                renderShop();
-                updateUI();
-                saveGame();
-            }
-        }
-
-        function buyIntercom(type, cost) {
-            if (gameData.cheese >= cost && !gameData.intercoms.includes(type)) {
-                gameData.cheese -= cost;
-                gameData.intercoms.push(type);
-                selectIntercom(type);
-                renderShop();
-                updateUI();
-                saveGame();
-            }
-        }
-
-        function selectIntercom(type) {
-            gameData.currentIntercom = type;
-            const intercom = intercomsList.find(i => i.id === type);
-            if (intercom) {
-                gameData.intercomBonus = intercom.bonus;
-                document.getElementById('intercomName').textContent = intercom.name;
-            }
-            renderShop();
-            updateUI();
-            saveGame();
-        }
-
-        function buySauce(type, cost) {
-            if (gameData.cheese >= cost && !gameData.sauces.includes(type)) {
-                gameData.cheese -= cost;
-                gameData.sauces.push(type);
-                selectSauce(type);
-                renderShop();
-                updateUI();
-                saveGame();
-            }
-        }
-
-        function selectSauce(type) {
-            gameData.currentSauce = type;
-            const sauce = saucesList.find(s => s.id === type);
-            if (sauce) {
-                gameData.sauceBonus = sauce.bonus;
-            }
-            renderShop();
-            updateUI();
-            saveGame();
-        }
-
-        function getRebirthCost() {
-            return Math.floor(1000000 * Math.pow(5, gameData.rebirths));
-        }
-
-        function doRebirth() {
-            const rebirthCost = getRebirthCost();
-            if (gameData.totalCheese >= rebirthCost) {
-                if (confirm(`Вы уверены? Все улучшения, домофоны и соусы будут сброшены.\nВы получите постоянный бонус +10% к производству!\n\nТекущие перерождения: ${gameData.rebirths}\nСледующая стоимость: ${(rebirthCost * 5).toLocaleString()} 🧀`)) {
-                    gameData.rebirths++;
-                    gameData.cheese = 0;
-                    gameData.totalCheese = 0;
-                    gameData.level = 1;
-                    gameData.clickPower = 1;
-                    gameData.cheesePerSecond = 0;
-                    
-                    // Сброс всех улучшений
-                    upgradesList.forEach(u => {
-                        gameData.upgrades[u.id] = 0;
-                    });
-                    
-                    // Сброс домофонов и соусов
-                    gameData.intercoms = ['cyfral'];
-                    gameData.currentIntercom = 'cyfral';
-                    gameData.sauces = ['basic'];
-                    gameData.currentSauce = 'basic';
-                    gameData.intercomBonus = 1;
-                    gameData.sauceBonus = 0;
-                    
-                    renderShop();
-                    updateUI();
-                    saveGame();
-                }
-            }
-        }
-
-        function checkLevelUp() {
-            const nextLevel = gameData.level * 5000;
-            if (gameData.totalCheese >= nextLevel) {
-                gameData.level++;
-                updateUI();
-            }
-        }
-
-        function switchShopTab(tab) {
-            document.querySelectorAll('.shop-tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-
-            document.getElementById('upgradesTab').classList.add('hidden');
-            document.getElementById('intercomsTab').classList.add('hidden');
-            document.getElementById('sauceTab').classList.add('hidden');
-
-            if (tab === 'upgrades') {
-                document.getElementById('upgradesTab').classList.remove('hidden');
-            } else if (tab === 'intercoms') {
-                document.getElementById('intercomsTab').classList.remove('hidden');
-            } else if (tab === 'sauce') {
-                document.getElementById('sauceTab').classList.remove('hidden');
-            }
-        }
-
-        function updateUI() {
-            document.getElementById('cheeseCount').textContent = Math.floor(gameData.cheese).toLocaleString();
-            document.getElementById('totalCheese').textContent = Math.floor(gameData.allTimeCheese).toLocaleString();
-            document.getElementById('levelDisplay').textContent = gameData.level;
-            document.getElementById('rebirthCount').textContent = gameData.rebirths;
-            document.getElementById('rebirthBonus').textContent = (1 + gameData.rebirths * 0.1).toFixed(1);
-            document.getElementById('clickPower').textContent = Math.floor(gameData.clickPower + gameData.sauceBonus).toLocaleString();
-            
-            const cps = Math.floor(gameData.cheesePerSecond * gameData.intercomBonus * (1 + gameData.rebirths * 0.1));
-            document.getElementById('cheesePerSec').textContent = cps.toLocaleString();
-            document.getElementById('intercomsSmeared').textContent = Math.floor(gameData.allTimeCheese / 100);
-
-            const rebirthCost = getRebirthCost();
-            document.getElementById('rebirthCost').textContent = rebirthCost.toLocaleString();
-            
-            const rebirthBtn = document.getElementById('rebirthBtn');
-            if (gameData.totalCheese >= rebirthCost) {
-                rebirthBtn.disabled = false;
-            } else {
-                rebirthBtn.disabled = true;
-            }
-        }
-
-        async function loadLeaderboard() {
-            const leaderboardRef = ref(database, 'leaderboard');
-            onValue(leaderboardRef, (snapshot) => {
-                const data = snapshot.val();
-                if (!data) {
-                    document.getElementById('leaderboardList').innerHTML = '<div style="text-align: center; color: #bdc3c7; padding: 20px;">Нет данных</div>';
-                    return;
-                }
-
-                const leaders = Object.values(data).sort((a, b) => b.totalCheese - a.totalCheese).slice(0, 10);
-                
-                const leaderboardHTML = leaders.map((leader, index) => {
-                    const rankClass = index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : '';
-                    return `
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank ${rankClass}">${index + 1}</div>
-                            <div class="leaderboard-player">${leader.login}</div>
-                            <div class="leaderboard-score">${Math.floor(leader.totalCheese).toLocaleString()} 🧀</div>
-                        </div>
-                    `;
-                }).join('');
-
-                document.getElementById('leaderboardList').innerHTML = leaderboardHTML;
-            });
-        }
-
-        function startGameLoop() {
-            setInterval(() => {
-                const cps = gameData.cheesePerSecond * gameData.intercomBonus * (1 + gameData.rebirths * 0.1);
-                gameData.cheese += cps / 10;
-                gameData.totalCheese += cps / 10;
-                gameData.allTimeCheese += cps / 10;
-                updateUI();
-                checkLevelUp();
-            }, 100);
-
-            setInterval(() => {
-                saveGame();
-            }, 10000);
-        }
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: false, mirror: true });
     </script>
 </body>
 </html>
