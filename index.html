@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Данил: Стиральный Режим (ULTIMATE FIXED)</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #fbfbfd;
+            --text: #1d1d1f;
+            --blue: #0071e3;
+            --pink: #ff2d55;
+            --orange: #ff9500;
+            --gray: #86868b;
+        }
+
+        * { box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); font-family: 'Manrope', sans-serif; margin: 0; overflow-x: hidden; transition: all 0.3s; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 10; }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 0;
+            border-bottom: 1px solid #e5e5ea;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; width: 100%; }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; text-align: center; }
+            .grid .img-wrapper, .grid .drum-outer { order: -1; }
+            h1 { font-size: 2.8rem !important; }
+            h2 { font-size: 2.2rem !important; }
+        }
+
+        h1 { font-size: 4rem; font-weight: 800; margin: 0; letter-spacing: -1.5px; line-height: 1.1; }
+        h2 { font-size: 2.8rem; font-weight: 700; margin-bottom: 15px; }
+        p { font-size: 1.2rem; color: var(--gray); max-width: 500px; }
+
+        .badge {
+            display: inline-block; padding: 6px 16px; background: #e8f3ff; color: var(--blue);
+            border-radius: 100px; font-weight: 700; font-size: 0.85rem; margin-bottom: 15px;
+        }
+
+        .img-wrapper {
+            border-radius: 28px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+            background: #eee; border: 1px solid rgba(0,0,0,0.05); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .img-wrapper img { width: 100%; height: auto; display: block; }
+
+        /* ИНТЕРАКТИВЫ */
+        .mushroom-active { transform: scale(1.3) !important; filter: hue-rotate(90deg) saturate(200%); }
+        .wake-up-shake { animation: shakeHard 0.5s infinite !important; filter: contrast(150%) brightness(1.2); }
+
+        /* ВНЕШНИЙ КОРПУС СТИРАЛКИ */
+        .drum-outer {
+            position: relative; width: clamp(280px, 40vw, 420px); height: clamp(280px, 40vw, 420px);
+            margin: 0 auto; border-radius: 50%; border: 16px solid #e5e5ea;
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.2), 0 20px 50px rgba(0,0,0,0.15); background: #000;
+            overflow: hidden; transition: box-shadow 0.3s ease;
+        }
+        .drum-container { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; animation: spin 15s linear infinite; }
+        .drum-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ЭФФЕКТЫ ВОДЫ */
+        .water-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; pointer-events: none; background: linear-gradient(180deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 198, 255, 0.45) 100%); box-shadow: inset 0 -20px 30px rgba(0, 113, 227, 0.5); mix-blend-mode: overlay; }
+        .glass-glare { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; pointer-events: none; background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.1) 100%); z-index: 5; }
+        .inner-foam { position: absolute; bottom: -10px; width: 100%; height: 35%; background: radial-gradient(circle, rgba(255,255,255,0.9) 20%, transparent 70%); border-radius: 50%; filter: blur(8px); opacity: 0.8; pointer-events: none; z-index: 4; animation: foamMove 3s ease-in-out infinite alternate; }
+
+        @keyframes foamMove { 0% { transform: translateY(0) scaleY(1); } 100% { transform: translateY(-10px) scaleY(1.2); } }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes spin-reverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+        @keyframes shake { 0% { transform: translate(3px, 2px) rotate(0deg); } 20% { transform: translate(-3px, -2px) rotate(-2deg); } 40% { transform: translate(-4px, 1px) rotate(2deg); } 60% { transform: translate(4px, 2px) rotate(0deg); } 80% { transform: translate(-2px, -1px) rotate(1deg); } 100% { transform: translate(2px, -3px) rotate(-1deg); } }
+        @keyframes shakeHard { 0% { transform: translate(10px, 10px) rotate(5deg); } 20% { transform: translate(-10px, -10px) rotate(-5deg); } 40% { transform: translate(-15px, 5px) rotate(10deg); } 60% { transform: translate(15px, 10px) rotate(-5deg); } 80% { transform: translate(-10px, -15px) rotate(5deg); } 100% { transform: translate(10px, -10px) rotate(-10deg); } }
+
+        /* КНОПКИ */
+        .controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 20px; }
+        .btn-ctrl { background: #f2f2f7; border: 1px solid #e5e5ea; padding: 12px 10px; border-radius: 16px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .btn-ctrl:hover { background: var(--blue); color: white; transform: scale(1.05); }
+        .btn-ctrl.danger { background: #ffebee; color: #d32f2f; border-color: #ffcdd2; }
+        .btn-ctrl.danger:hover { background: #d32f2f; color: white; }
+        .btn-ctrl.special { background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); border: none; }
+        .btn-icon { font-size: 1.5rem; margin-bottom: 5px; }
+
+        /* ФОНОВЫЕ ЭМОДЗИ */
+        .bg-emoji { position: absolute; pointer-events: none; opacity: 0; z-index: 1; animation: floatEmoji 5s linear forwards; font-size: 2rem; }
+        @keyframes floatEmoji {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* PARTY MODE (СЕКРЕТНЫЙ БОСС) */
+        .party-mode { animation: rainbowBg 0.5s infinite, shake 0.2s infinite; }
+        @keyframes rainbowBg { 0% { filter: hue-rotate(0deg) invert(0%); } 50% { filter: hue-rotate(180deg) invert(100%); } 100% { filter: hue-rotate(360deg) invert(0%); } }
+
+        .authors-card { background: white; padding: 25px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); text-align: center; border: 1px solid #f0f0f0; }
+    </style>
+</head>
+<body>
+
+    <div id="emoji-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden;"></div>
+
+    <!-- 1 -->
+    <section data-effect="✨">
+        <div class="container">
+            <div class="grid">
+                <div data-aos="fade-right">
+                    <span class="badge">🔥 Danil Edition 2026</span>
+                    <h1>Данил. <br><span style="color: var(--blue);">Погнали!</span></h1>
+                    <p>Официальная презентация замачивания и отжима. Листай вниз, тут полный разнос.</p>
+                </div>
+                <div class="img-wrapper" data-aos="zoom-in"><img src="danil1.jpg" alt="Данил"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2 -->
+    <section data-effect="📚" style="background: #f4f4f7;">
+        <div class="container">
+            <div class="grid">
+                <div class="img-wrapper" data-aos="fade-up"><img src="danil2.jpg" alt="Школа"></div>
+                <div data-aos="fade-left">
+                    <span class="badge">Режим: Школа</span>
+                    <h2>Энергия на максимуме</h2>
+                    <p>Загрузка перед баталией. В коридоре душно, зато в стиралке будет свежо!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3: СТИРАЛКА -->
+    <section data-effect="🫧">
+        <div class="container">
+            <div class="grid">
+                <div data-aos="fade-right">
+                    <span class="badge">🌀 Control Panel FX</span>
+                    <h2>ВЫБЕРИ РЕЖИМ</h2>
+                    <p>Нажимай кнопки: в барабане бурлит вода, включена подсветка и пена!</p>
+                    <div class="controls-grid">
+                        <button class="btn-ctrl" onclick="setMode('normal', '25s', '#0071e3')"><span class="btn-icon">🪶</span> Деликатная</button>
+                        <button class="btn-ctrl" onclick="setMode('normal', '1.2s', '#ff9500')"><span class="btn-icon">⚡</span> Турбо-отжим</button>
+                        <button class="btn-ctrl danger" onclick="setMode('shake', '0.4s', '#ff2d55')"><span class="btn-icon">🪨</span> С камнями</button>
+                        <button class="btn-ctrl special" onclick="popBubbles()"><span class="btn-icon">🧼</span> Пена-Пати</button>
+                    </div>
+                </div>
+                <div data-aos="zoom-in">
+                    <div class="drum-outer" id="drumOuter">
+                        <div class="drum-container" id="drum"><img src="danil3.jpg" alt="Данил в стиралке"></div>
+                        <div class="water-overlay"></div><div class="inner-foam"></div><div class="glass-glare"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4 -->
+    <section data-effect="📱" style="background: #1c1c1e; color: white;">
+        <div class="container">
+            <div class="grid">
+                <div class="img-wrapper" data-aos="flip-left" style="border: none;"><img src="danil4.jpg" alt="Звонок"></div>
+                <div data-aos="fade-left">
+                    <span class="badge" style="background: #30d158; color: white;">Live FaceTime</span>
+                    <h2 style="color: white;">Звонок из центрифуги</h2>
+                    <p style="color: #8e8e93;">"Алло, мамуль, я чист, свеж и готов к новым свершениям!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5 -->
+    <section data-effect="🍄">
+        <div class="container">
+            <div class="grid">
+                <div data-aos="fade-right">
+                    <span class="badge" style="background: #ffede8; color: #ff3b30;">Bio-Hazard</span>
+                    <h2>Грибной эффект</h2>
+                    <p>Нажми кнопку ниже, чтобы применить эффект роста из Марио!</p>
+                    <button class="btn-ctrl special" onclick="toggleMushroom()" style="width: 100%; margin-top: 15px;"><span class="btn-icon">🍄</span> ВЫРАСТИ!</button>
+                </div>
+                <div class="img-wrapper" id="mushroom-img" data-aos="zoom-in"><img src="danil5.jpg" alt="Мухомор"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6 -->
+    <section data-effect="💤" style="background: #f4f4f7;">
+        <div class="container">
+            <div class="grid">
+                <div class="img-wrapper" id="sleep-img" data-aos="fade-up"><img src="danil6.jpg" alt="Спит"></div>
+                <div data-aos="fade-left">
+                    <span class="badge" style="background: #e5e5ea; color: #1c1c1e;">Sleep Mode</span>
+                    <h2>Перегрев системы</h2>
+                    <p>Ушел в гибернацию прямо на матах. Надо срочно его будить!</p>
+                    <button class="btn-ctrl danger" onclick="wakeUp()" style="width: 100%; margin-top: 15px;"><span class="btn-icon">⏰</span> РАЗБУДИТЬ ЖЕСТКО</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7 -->
+    <section data-effect="❄️">
+        <div class="container">
+            <div class="grid">
+                <div data-aos="fade-right">
+                    <span class="badge" style="background: #e8f3ff; color: #007aff;">Cold Wash 0°</span>
+                    <h2>Альпийская заморозка</h2>
+                    <p>Экстремальное тестирование на свежем воздухе. Цикл ледяного полоскания.</p>
+                </div>
+                <div class="img-wrapper" data-aos="zoom-in"><img src="danil7.jpg" alt="Снег"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8 -->
+    <section data-effect="🥐" style="background: #f4f4f7;">
+        <div class="container">
+            <div class="grid">
+                <div class="img-wrapper" data-aos="fade-up"><img src="danil8.jpg" alt="Булка"></div>
+                <div data-aos="fade-left">
+                    <span class="badge" style="background: #fff3e0; color: #ff9500;">Power Bank</span>
+                    <h2>Дозаправка углеводами</h2>
+                    <p>Система требует калорий. Интеграция школьной выпечки напрямую в оперативную память.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9 -->
+    <section data-effect="🔊">
+        <div class="container">
+            <div class="grid">
+                <div data-aos="fade-right">
+                    <span class="badge" style="background: #fce4ec; color: #e91e63;">Vocal Test</span>
+                    <h2>Ультразвук</h2>
+                    <p>Калибровка внутренних динамиков на максимальной громкости. АААААА!</p>
+                </div>
+                <div class="img-wrapper" data-aos="zoom-in"><img src="danil9.jpg" alt="Орет"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10 -->
+    <section data-effect="✨" style="background: #f4f4f7;">
+        <div class="container">
+            <div class="grid">
+                <div class="img-wrapper" data-aos="fade-up"><img src="danil10.jpg" alt="Улыбается"></div>
+                <div data-aos="fade-left">
+                    <span class="badge" style="background: #e8f5e9; color: #4caf50;">100% Clean</span>
+                    <h2>Идеальный результат</h2>
+                    <p>Тот самый момент, когда пятна скуки удалены подчистую. Эндорфины на максимуме.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11 -->
+    <section data-effect="💧" style="background: #1c1c1e; color: white;">
+        <div class="container">
+            <div class="grid">
+                <div data-aos="fade-right">
+                    <span class="badge" style="background: rgba(0, 113, 227, 0.2); color: #64d2ff; border: 1px solid #64d2ff;">System Drain</span>
+                    <h2 style="color: white;">Слив остатков</h2>
+                    <p style="color: #8e8e93;">Происходит экстренное восстановление водного баланса. Бутылка — лучший друг.</p>
+                </div>
+                <div class="img-wrapper" data-aos="zoom-in" style="border: none;"><img src="danil11.jpg" alt="Вода"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12: СЕКРЕТНЫЙ БОСС (ФИКСИРОВАННЫЙ С ДАНИЛ 12) -->
+    <section data-effect="🥖" id="secret-boss" style="background: #0a0a0a; border-top: 5px dashed #ff0000; box-shadow: 0 0 50px red;">
+        <div class="container">
+            <div class="grid">
+                <div class="img-wrapper" id="boss-img" data-aos="zoom-in" style="border: 5px solid gold;"><img src="danil12.jpg" alt="Барон"></div>
+                <div data-aos="fade-left">
+                    <span class="badge" style="background: red; color: white; animation: shake 0.5s infinite;">🚨 CLASSIFIED 🚨</span>
+                    <h2 style="color: #fff; font-size: 3.5rem;">ХЛЕБНЫЙ <br><span style="color: gold;">БАРОН</span></h2>
+                    <p style="color: #0f0; font-family: monospace;">"Алло, это пекарня? Грузите батоны бочками." Секретный босс разблокирован.</p>
+                    <button class="btn-ctrl danger" onclick="startBossFight()" style="width: 100%; padding: 20px; font-size: 1.2rem; background: red; color: white; box-shadow: 0 0 20px red;">📞 ПОЗВОНИТЬ РЕШАЛЕ (ОПАСНО)</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- АВТОРЫ -->
+    <section style="background: #fbfbfd; border: none;">
+        <div class="container">
+            <div style="text-align: center; width: 100%;">
+                <h2 data-aos="fade-up">Создатели этого шедевра</h2>
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
+                    <div class="authors-card" data-aos="zoom-in">
+                        <span style="color: var(--gray); font-size: 0.8rem;">В РОЛЯХ</span>
+                        <h3 style="margin: 5px 0 0;">Данил</h3><span style="color: var(--blue);">тот кто на фото</span>
+                    </div>
+                    <div class="authors-card" data-aos="zoom-in" data-aos-delay="100">
+                        <span style="color: var(--gray); font-size: 0.8rem;">АВТОРЫ</span>
+                        <h3 style="margin: 5px 0 0;">Qwenix</h3><span style="color: var(--blue);">Главный создаель</span>
+                    </div>
+                    <div class="authors-card" data-aos="zoom-in" data-aos-delay="200">
+                        <span style="color: var(--gray); font-size: 0.8rem;">АВТОРЫ</span>
+                        <h3 style="margin: 5px 0 0;">Setagen</h3><span style="color: var(--blue);">Помощник</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 60px 20px; text-align: center; background: #000; color: white;">
+        <h2>Стирка завершена 🧼</h2>
+        <p style="color: #8e8e93;">2026 © Все права защищены XD Team.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: false });
+
+        let currentEmoji = '✨';
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    currentEmoji = entry.target.getAttribute('data-effect') || '✨';
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('section[data-effect]').forEach(sec => observer.observe(sec));
+
+        setInterval(() => {
+            const container = document.getElementById('emoji-container');
+            const el = document.createElement('div');
+            el.className = 'bg-emoji';
+            el.innerText = currentEmoji;
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.fontSize = (Math.random() * 2 + 1) + 'rem';
+            container.appendChild(el);
+            setTimeout(() => el.remove(), 5000);
+        }, 300);
+
+        function setMode(type, speed, glowColor) {
+            playBeep(850);
+            const drum = document.getElementById('drum');
+            const drumOuter = document.getElementById('drumOuter');
+            drumOuter.style.boxShadow = `inset 0 0 25px rgba(0,0,0,0.2), 0 0 40px ${glowColor}`;
+            drum.style.animation = 'none';
+            drum.offsetHeight; 
+            if (type === 'normal') drum.style.animation = `spin ${speed} linear infinite`;
+            else if (type === 'reverse') drum.style.animation = `spin-reverse ${speed} linear infinite`;
+            else if (type === 'shake') drum.style.animation = `spin ${speed} linear infinite, shake 0.15s infinite`;
+        }
+
+        function popBubbles() {
+            playBeep(900);
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const bubble = document.createElement('div');
+                    bubble.classList.add('bg-emoji');
+                    bubble.innerText = '🧼';
+                    bubble.style.left = Math.random() * 100 + 'vw';
+                    document.getElementById('emoji-container').appendChild(bubble);
+                    setTimeout(() => bubble.remove(), 4000);
+                }, i * 50);
+            }
+        }
+
+        function toggleMushroom() {
+            playBeep(1200);
+            document.getElementById('mushroom-img').classList.toggle('mushroom-active');
+        }
+
+        function wakeUp() {
+            playBeep(400);
+            const img = document.getElementById('sleep-img');
+            img.classList.add('wake-up-shake');
+            setTimeout(() => img.classList.remove('wake-up-shake'), 1500);
+        }
+
+        function startBossFight() {
+            currentEmoji = '🥖';
+            document.body.classList.toggle('party-mode');
+            
+            let count = 0;
+            let beepInterval = setInterval(() => {
+                playBeep(Math.random() * 1000 + 200);
+                count++;
+                if(count > 15) clearInterval(beepInterval);
+            }, 150);
+
+            const img = document.getElementById('boss-img');
+            img.style.animation = 'shakeHard 0.1s infinite';
+            setTimeout(() => {
+                document.body.classList.remove('party-mode');
+                img.style.animation = '';
+            }, 3000);
+        }
+
+        function playBeep(freq) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                osc.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.1);
+            } catch(e) {}
+        }
+    </script>
+</body>
+</html>
